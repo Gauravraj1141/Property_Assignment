@@ -1,0 +1,77 @@
+{% extends 'pr_app/Base.html' %}
+
+
+
+{% block title %}
+Search
+{% endblock title %}
+
+
+
+{% block Content %}
+
+
+
+
+
+<div class="row justify-content-center">
+    <h1>Find City by State Name</h1>
+
+    <div class="col-md-8">
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="my-4">
+                <label for="exampleFormControlInput1" class="form-label">State Name</label>
+                <input type="text" class="form-control" name="state" id="exampleFormControlInput1"
+                    placeholder="Enter State Name." required>
+            </div>
+
+            <input type="submit" value="Find Cities" class="btn btn-outline-danger">
+            <a href="/" class="btn btn-outline-success mx-2">Home</a>
+
+        </form>
+    </div>
+
+
+
+
+    <div class="my-4">
+        {% if cities %}
+
+
+        <h3>Show All Cities </h3>
+        <table class="table table-success table-striped">
+
+            <thead>
+                <tr>
+                    <th scope="col">Sr.no.</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for Pr in cities  %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ Pr.City_name }}</td>
+                    <td>{{ Pr.State_name }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        {% else %}
+
+
+        <h3>I didn't found any City</h3>
+        {% endif %}
+    </div>
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'pr_app/Base.html' %}
+
+
+
+{% block title %}
+Update
+{% endblock title %}
+
+
+
+{% block Content %}
+
+
+
+
+
+<div class="row justify-content-center">
+    <h1>Update Your Property</h1>
+
+    <div class="col-md-8">
+        {% comment %} we show success message here {% endcomment %}
+        {% if  messages  %}
+        {% for msg in messages  %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Success</h4>
+            <p>{{ msg }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+
+
+            {% for fm in form %}
+            <div class="my-4">
+                <h6> {{ fm.label_tag }}</h6>
+                {{ fm }}
+
+                <!-- show errors-->
+                {% for error in fm.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+
+            </div>
+            {% endfor %}
+
+            <input type="submit" value="Update Property" class="btn btn-outline-success">
+
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock Content %}

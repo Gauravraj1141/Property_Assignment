@@ -1,0 +1,102 @@
+{% extends 'pr_app/Base.html' %}
+
+
+
+{% block title %}
+Home
+{% endblock title %}
+
+
+
+{% block Content %}
+
+<div class="my-4">
+    <a href="{% url 'Fetch_by_city' %}" class="btn btn-warning">Search Property by city</a>
+    <a href="{% url 'Find_city' %}" class="btn btn-success mx-4">Find City by state</a>
+    <a href="{% url 'Find_similiar' %}" class="btn btn-success mx-4">Find_similar_properties</a>
+</div>
+
+
+
+<div class="row justify-content-center">
+    <h1>Add Your Property</h1>
+
+    <div class="col-md-8">
+        {% comment %} we show success message here {% endcomment %}
+        {% if  messages  %}
+        {% for msg in messages  %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Success</h4>
+            <p>{{ msg }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+
+
+            {% for fm in form %}
+            <div class="my-4">
+                <h6> {{ fm.label_tag }}</h6>
+                {{ fm }}
+
+                <!-- show errors-->
+                {% for error in fm.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+
+            </div>
+            {% endfor %}
+
+            <input type="submit" value="Add Property" class="btn btn-success">
+
+        </form>
+    </div>
+</div>
+
+
+
+<div class="my-4">
+    {% if Porperties %}
+
+
+    <h3>Show All Properties Details </h3>
+    <table class="table table-success table-striped">
+
+        <thead>
+            <tr>
+                <th scope="col">Sr.no.</th>
+                <th scope="col">Property Id</th>
+                <th scope="col">Property Name</th>
+                <th scope="col">Property Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for Pr in Porperties  %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ Pr.Pr_id }}</td>
+                <td>{{ Pr.Property_name }}</td>
+                <td>{{ Pr.Property_address }}</td>
+                <td>{{ Pr.City_name }}</td>
+                <td>{{ Pr.State_name }}</td>
+                <td><a href="{% url 'Update' Pr.Pr_id %}" class="btn btn-warning">Update</a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% else %}
+
+
+    <h3>I Could Not found any Property , Please Add Your Property </h3>
+    {% endif %}
+</div>
+{% endblock Content %}

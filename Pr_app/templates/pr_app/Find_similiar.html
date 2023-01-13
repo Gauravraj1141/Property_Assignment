@@ -1,0 +1,95 @@
+{% extends 'pr_app/Base.html' %}
+
+
+
+{% block title %}
+Search
+{% endblock title %}
+
+
+
+{% block Content %}
+
+
+
+
+
+<div class="row justify-content-center">
+    <h1>Find Properites by similiar city </h1>
+
+
+    <div class="col-md-8">
+
+        {% if  messages  %}
+        {% for msg in messages  %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Warning!</h4>
+            <p>{{ msg }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="my-4">
+                <label for="exampleFormControlInput1" class="form-label">Property Id </label>
+                <input type="text" class="form-control" name="id" id="exampleFormControlInput1"
+                    placeholder="Enter Property id" required>
+            </div>
+
+            <input type="submit" value="Find Properties" class="btn btn-outline-danger">
+            <a href="/" class="btn btn-outline-success mx-2">Home</a>
+
+        </form>
+    </div>
+
+
+
+
+
+    <div class="my-4">
+        {% if Similiar_city_data %}
+
+
+        <h3>Show All Properties by similiar city name </h3>
+        <table class="table table-success table-striped">
+
+            <thead>
+                <tr>
+                    <th scope="col">Sr.no.</th>
+                    <th scope="col">Property Id</th>
+                    <th scope="col">Property Name</th>
+                    <th scope="col">Property Address</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for Pr in Similiar_city_data  %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ Pr.Pr_id }}</td>
+                    <td>{{ Pr.Property_name }}</td>
+                    <td>{{ Pr.Property_address }}</td>
+                    <td>{{ Pr.City_name }}</td>
+                    <td>{{ Pr.State_name }}</td>
+                    <td><a href="{% url 'Update' Pr.Pr_id %}" class="btn btn-warning">Update</a></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        {% else %}
+
+
+        <h3>I Could Not found any Property by similiar city</h3>
+        {% endif %}
+    </div>
+
+
+</div>
+
+{% endblock %}
